@@ -1,0 +1,10 @@
+langgraph
+langchain-ollama
+langchain-mcp-adapters
+langchain-core
+fastmcp
+ddgs
+pydantic
+python-dotenv
+jupyter
+ipykernel
