@@ -1,0 +1,14 @@
+langgraph
+langchain-ollama
+langchain-mcp-adapters
+langchain-core
+langsmith
+fastmcp
+ddgs
+beautifulsoup4
+lxml
+requests
+pydantic
+python-dotenv
+streamlit
+nest_asyncio

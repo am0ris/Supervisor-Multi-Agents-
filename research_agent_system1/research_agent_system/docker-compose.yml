@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+
+  mcp-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.mcp
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.streamlit
+    ports:
+      - "8501:8501"
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - MCP_SERVER_URL=http://mcp-server:8000/mcp
+      - SEARCH_TIME_LIMIT=${SEARCH_TIME_LIMIT:-y}
+      - LANGSMITH_API_KEY=${LANGSMITH_API_KEY:-}
+      - LANGSMITH_PROJECT=${LANGSMITH_PROJECT:-multi-agent-research}
+    depends_on:
+      - ollama
+      - mcp-server
+    restart: unless-stopped
+
+volumes:
+  ollama_data:

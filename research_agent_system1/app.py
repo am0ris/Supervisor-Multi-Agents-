@@ -35,12 +35,11 @@ AGENT_ICONS = {
 
 @st.cache_resource(show_spinner=False)
 def get_graph():
-    """""
     return asyncio.run(build_graph())
 
 
 def run_graph_sync(graph, initial_state, thread_config, on_update):
-    """بيلف على astream ويستدعي on_update لكل خطوة - غلاف sync حوالين async generator."""
+    
     async def _runner():
         async for update in graph.astream(initial_state, config=thread_config, stream_mode="updates"):
             for node, output in update.items():
@@ -65,14 +64,13 @@ with st.sidebar:
     else:
         st.warning("")
 
-   
 
 # ---------------------------------------------------------------- Main
 st.title("🤖 Multi-Agent Research System")
 st.caption("Supervisor + Research + Extraction + Analysis + Reviewer + Summary — كله شغال بـ LangGraph و MCP.")
 
 query = st.text_area("Write your search query", placeholder="What are the latest developments in RAG?", height=80)
-run_clicked = st.button("Search type="primary", use_container_width=False)
+run_clicked = st.button("Search", type="primary", use_container_width=False)
 
 if run_clicked:
     if not query.strip():
